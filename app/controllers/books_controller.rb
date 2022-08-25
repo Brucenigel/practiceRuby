@@ -11,7 +11,8 @@ class BooksController < ApplicationController
 
   # GET /books/1
   def show
-    render json: @book
+    @books = Book.last
+    render json: BookSerializer.new(@books).serializable_hash[:data][:attributes]
   end
 
   # POST /books
@@ -47,6 +48,6 @@ class BooksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def book_params
-      params.permit(:title)
+      params.permit(:title, :image)
     end
 end
